@@ -61,7 +61,7 @@ if nx == 1:
 		filepath = delimiter.join(mylist)
 		databk = h5file.get(filepath)
 		m1 = np.array(databk)
-		m2=np.zeros((nz/2, ny/2, nxMagic))
+		m2=np.zeros((nz/2, ny/2, nx))
 		for k in xrange(nz/2):
 			for j in xrange(ny/2):
 				m2[k, j, :]=(m1[2*k, 2*j, :]+m1[2*k+1, 2*j+1, :])/2
@@ -74,7 +74,7 @@ else:
 		filepath = delimiter.join(mylist)
 		databk = h5file.get(filepath)
 		m1 = np.array(databk)
-		m2=np.zeros((nz/2, ny/2, nxMagic))
+		m2=np.zeros((nz/2, ny/2, nx/2))
 		for k in xrange(nz/2):
 			for j in xrange(ny/2):
 				for i in xrange(nx/2):
