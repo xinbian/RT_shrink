@@ -6,8 +6,8 @@ module load hdf5
 
 inFile="tests_single_new.h5"
 outFile="temp.h5"
-inTime="001000"
-outTime="001000"
+inTime="000001"
+outTime="000001"
 
 
 h5copy -p -i $inFile  -o $outFile -s /Fields/Prho/$inTime -d /Fields/Prho/$outTime

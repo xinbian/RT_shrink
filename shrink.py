@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-#you can use this to extend RT domain in z direction
-#orginal nx ny nz after nx ny 2*nz
-#velocity is set to zero 
-#density is set to horizotal average at top and bottom with 40 grid porints offset
-#pressure is similar to density and use hydrostatic equation rho*g*dz
+#you can use this to decrease RT domain size
+#if 3D orginal nx ny nz after nx/2 ny/2 nz/2
+#if 2D orginal nx ny nz after nx ny/2 nz/2
 @author: Xin
 """
 
@@ -49,28 +47,40 @@ ny=m1.shape[1]
 nx=m1.shape[2]
 dz=3.2/nz
 
-delimiter = ''
-mylist = ['Fields/',variable[0],'/',istep]
-filepath = delimiter.join(mylist)
-m2=np.zeros((nz/2, ny/2, nx))
-h5new.create_dataset(filepath,data=m2)
-	
-
-#Vz
-for mm in xrange(1, len(variable)):
+#2D case, set vx = 0
+if nx == 1:
 	delimiter = ''
-	mylist = ['Fields/',variable[mm],'/',istep]
+	mylist = ['Fields/',variable[0],'/',istep]
 	filepath = delimiter.join(mylist)
-	databk = h5file.get(filepath)
-	m1 = np.array(databk)
 	m2=np.zeros((nz/2, ny/2, nx))
-	for k in xrange(nz/2):
-		for j in xrange(ny/2):
-			m2[k, j, :]=(m1[2*k, 2*j, :]+m1[2*k+1, 2*j+1, :])/2
 	h5new.create_dataset(filepath,data=m2)
-	
-	
-	
+
+	for mm in xrange(1, len(variable)):
+		delimiter = ''
+		mylist = ['Fields/',variable[mm],'/',istep]
+		filepath = delimiter.join(mylist)
+		databk = h5file.get(filepath)
+		m1 = np.array(databk)
+		m2=np.zeros((nz/2, ny/2, nxMagic))
+		for k in xrange(nz/2):
+			for j in xrange(ny/2):
+				m2[k, j, :]=(m1[2*k, 2*j, :]+m1[2*k+1, 2*j+1, :])/2
+		h5new.create_dataset(filepath,data=m2)
+# 3D case
+else:
+	for mm in xrange(len(variable)):
+		delimiter = ''
+		mylist = ['Fields/',variable[mm],'/',istep]
+		filepath = delimiter.join(mylist)
+		databk = h5file.get(filepath)
+		m1 = np.array(databk)
+		m2=np.zeros((nz/2, ny/2, nxMagic))
+		for k in xrange(nz/2):
+			for j in xrange(ny/2):
+				for i in xrange(nx/2):
+					m2[k, j, i]=(m1[2*k, 2*j, 2*i]+m1[2*k+1, 2*j+1, 2*i+1])/2
+		h5new.create_dataset(filepath,data=m2)
+
 	
 	
 h5file.close()
