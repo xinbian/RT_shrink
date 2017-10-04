@@ -11,6 +11,7 @@ outTime="000001"
 
 
 h5copy -p -i $inFile  -o $outFile -s /Fields/Prho/$inTime -d /Fields/Prho/$outTime
+h5copy -p -i $inFile  -o $outFile -s /Fields/PVx/$inTime -d /Fields/PVx/$outTime
 h5copy -p -i $inFile  -o $outFile -s /Fields/PPress/$inTime -d /Fields/PPress/$outTime
 h5copy -p -i $inFile  -o $outFile -s /Fields/PVy/$inTime -d /Fields/PVy/$outTime
 h5copy -p -i $inFile  -o $outFile -s /Fields/PVz/$inTime -d /Fields/PVz/$outTime

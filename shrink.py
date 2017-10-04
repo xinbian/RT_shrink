@@ -45,6 +45,7 @@ m1 = np.array(databk)
 nz=m1.shape[0]
 ny=m1.shape[1]
 nx=m1.shape[2]
+print nx, ny, nz
 dz=3.2/nz
 
 #2D case, set vx = 0
